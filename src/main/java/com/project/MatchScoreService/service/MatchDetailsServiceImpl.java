@@ -1,6 +1,7 @@
 package com.project.MatchScoreService.service;
 
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -34,6 +35,8 @@ public class MatchDetailsServiceImpl implements MatchDetailsService{
 			
 			long matchCount = getMatchCountFromResponse(response);
 			
+			Thread.sleep(getRandomTime()); //Delaying the response
+			
 			return MatchResponse.builder()
 					.year(year)
 					.numberOfMatches(matchCount)
@@ -46,6 +49,13 @@ public class MatchDetailsServiceImpl implements MatchDetailsService{
 	}
 	
 	
+	private long getRandomTime() {
+		int low = 3;
+		int high = 6;
+		return new Random().nextInt(high - low + 1) + low * 1000; //Converting to millisec
+	}
+
+
 	private long getMatchCountFromResponse(FootballMatchesResponse response) {
 		return response.getData()
 				.stream()
