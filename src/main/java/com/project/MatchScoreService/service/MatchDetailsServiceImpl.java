@@ -1,16 +1,21 @@
 package com.project.MatchScoreService.service;
 
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.project.MatchScoreService.modals.FootballMatchesResponse;
+import com.project.MatchScoreService.modals.MatchData;
 import com.project.MatchScoreService.modals.MatchResponse;
 
+@Service
 public class MatchDetailsServiceImpl implements MatchDetailsService{
 	
 	private static final String URL = "https://jsonmock.hackerrank.com/api/football_matches?year=";
@@ -26,11 +31,9 @@ public class MatchDetailsServiceImpl implements MatchDetailsService{
 		try {
 			String url = getApiUrl(year);
 			FootballMatchesResponse response = getMatchResponseFromAPI(url);
-			long matchCount = response.getData()
-									.stream()
-									.filter(m -> m.getTeam2goals() == m.getTeam1goals())
-									.count();
-					
+			
+			long matchCount = getMatchCountFromResponse(response);
+			
 			return MatchResponse.builder()
 					.year(year)
 					.numberOfMatches(matchCount)
@@ -43,6 +46,14 @@ public class MatchDetailsServiceImpl implements MatchDetailsService{
 	}
 	
 	
+	private long getMatchCountFromResponse(FootballMatchesResponse response) {
+		return response.getData()
+				.stream()
+				.filter(m -> m.getTeam2goals().equals(m.getTeam1goals()))
+				.count();
+	}
+
+
 	private String getApiUrl(String year) {
 		StringBuilder sb  = new StringBuilder(URL);
 		sb.append(year);

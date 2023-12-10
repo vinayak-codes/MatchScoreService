@@ -7,6 +7,6 @@ import lombok.Data;
 @Builder
 public class MatchResponse {
 	private String year;
-	private Long numberOfMatches;
+	private long numberOfMatches;
 	private String status;
 }

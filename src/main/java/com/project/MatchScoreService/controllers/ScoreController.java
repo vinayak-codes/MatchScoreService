@@ -74,8 +74,7 @@ public class ScoreController {
 	
 	@GetMapping("/getDrawMatches")
 	public ResponseEntity<MatchResponse> getNumberOfDrawMathes(@RequestParam String year){
-		int numberOfMatches = matchService.getDrawMatches(year);
-		String response = "Number of matches which result to draw in the "
-		return new ResponseEntity<String>(response, HttpStatus.OK);
+		MatchResponse response = matchService.getDrawMatches(year);
+		return new ResponseEntity<MatchResponse>(response, HttpStatus.OK);
 	}
 }
