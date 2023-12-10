@@ -37,6 +37,10 @@ public class JWTUtility implements Serializable {
         final Claims claims = getAllClaimsFromToken(token);
         return claimsResolver.apply(claims);
     }
+    
+    public Claims getAllClaims(String tokenString) {
+    	return getAllClaimsFromToken(tokenString);
+    }
 
 
     //for retrieving any information from token we will need the secret key
@@ -63,6 +67,7 @@ public class JWTUtility implements Serializable {
     //2. Sign the JWT using the HS512 algorithm and secret key.
     private String doGenerateToken(String subject) {
         return Jwts.builder().setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
+        		.setIssuer("VinayakCodes")
                 .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
                 .signWith(SignatureAlgorithm.HS512, secretKey).compact();
     }

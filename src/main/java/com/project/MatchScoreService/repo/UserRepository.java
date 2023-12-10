@@ -6,17 +6,9 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.project.MatchScoreService.modals.User;
-
-
-/* 
- * Not using database to store and retrieve user details for simplicity 
- * Creating some dummy users instead and validating for that user only
- */
-
 
 @Component
 public class UserRepository {
@@ -25,6 +17,13 @@ public class UserRepository {
 	
 	@Autowired
 	private BCryptPasswordEncoder encoder;
+	
+	
+	/* 
+	 * Not using database to store and retrieve user details for simplicity 
+	 * Creating some dummy users instead and validating for that user only
+	 */
+
 	
 	public void generateUsers(){
 		users.add(new User("vinayak",

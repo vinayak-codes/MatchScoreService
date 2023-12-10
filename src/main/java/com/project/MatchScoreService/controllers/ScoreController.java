@@ -1,5 +1,7 @@
 package com.project.MatchScoreService.controllers;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.MatchScoreService.modals.AuthenticationRequest;
 import com.project.MatchScoreService.modals.JWTDetailsResponse;
+import com.project.MatchScoreService.modals.MatchResponse;
 import com.project.MatchScoreService.modals.TokenResponse;
 import com.project.MatchScoreService.repo.UserRepository;
+import com.project.MatchScoreService.service.MatchDetailsService;
+import com.project.MatchScoreService.service.TokenService;
 import com.project.MatchScoreService.service.UserService;
 import com.project.MatchScoreService.utility.JWTUtility;
 
@@ -34,6 +39,12 @@ public class ScoreController {
 	
 	@Autowired
 	private UserRepository repository;
+	
+	@Autowired
+	private TokenService tokenService;
+	
+	@Autowired
+	private MatchDetailsService matchService;
 	
 	
 
@@ -56,12 +67,15 @@ public class ScoreController {
 	}
 	
 	@GetMapping("/getTokenDetails")
-	public ResponseEntity<JWTDetailsResponse> getTokenDetails(){
-		return new ResponseEntity<>( new JWTDetailsResponse(), HttpStatus.OK);
+	public ResponseEntity<JWTDetailsResponse> getTokenDetails(HttpServletRequest request){
+		JWTDetailsResponse response = tokenService.getTokenDetailsResponse(request);
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
 	@GetMapping("/getDrawMatches")
-	public ResponseEntity<String> getNumberOfDrawMathes(@RequestParam String year){
-		return null;
+	public ResponseEntity<MatchResponse> getNumberOfDrawMathes(@RequestParam String year){
+		int numberOfMatches = matchService.getDrawMatches(year);
+		String response = "Number of matches which result to draw in the "
+		return new ResponseEntity<String>(response, HttpStatus.OK);
 	}
 }
