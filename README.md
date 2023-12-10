@@ -3,7 +3,7 @@ A simple REST API for getting football match scores.
 
 Project Details
 
-1. JWT is required in the Authorization Header as Bearer <Token>.
+1. JWT is required in the Authorization Header as Bearer [Token].
 2. Only 2 users are generated internally for simplicity purposes.
 
    User 1 : "Vinayak" , "Pass@123", "ADMIN" (Will be able to access both end points)
