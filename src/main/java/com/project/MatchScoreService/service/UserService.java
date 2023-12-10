@@ -1,8 +1,11 @@
 package com.project.MatchScoreService.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
+import org.apache.catalina.startup.ClassLoaderFactory.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,9 +27,12 @@ public class UserService implements UserDetailsService{
 		 * Not using database to store and retrieve user details for simplicity 
 		 * Creating a dummy user instead and validating for that user only
 		 */
-		
+		userRepository.generateUsers();
 		User user = userRepository.getUserbyName(username);
-		return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(), new ArrayList<>());
+		return new org.springframework.security.core.userdetails.User(
+				user.getUserName(),
+				user.getPassword(),
+				Arrays.asList(new SimpleGrantedAuthority(user.getRole().name())));
 	}
 
 }
