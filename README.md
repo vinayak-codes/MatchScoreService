@@ -9,6 +9,8 @@ Project Details
    User 1 : "Vinayak" , "Pass@123", "ADMIN" (Will be able to access both end points)
    User 2 : "Rohan", "Pass@456", "USER" (Will be able to access only the score end point)
 
+3. It was not clear in the problem statement that if I have to fetch the response for all the pages from the API so I implemented only for the first page.
+
 
    
 * Implemented 3 endpoints :
